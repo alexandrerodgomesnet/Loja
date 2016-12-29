@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Loja.Domain.Entidades.Produto>
+
+
+@foreach (var produto in Model)
+{
+    <li>
+        <a href="@Url.Action("Detalhes", "Home", new { id = produto.Codigo })">
+            <img alt="@produto.Nome" src="~/Content/Imagens/@produto.Foto" />
+            <span>@produto.Descricao</span>
+        </a>
+    </li>
+}

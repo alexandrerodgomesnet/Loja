@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Loja.MVC.Models.ProdutoViewModel>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Preco)
+        </th>
+        <th>Selecione para comprar</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descricao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Preco)
+        </td>
+        <td>
+            @{ 
+
+                var check = @item.CheckBox.Checked == true ? true : false;
+
+            }
+            <div class='col-md-3'>
+                <label class='checkbox'>
+                    <input type='hidden' name='CheckBox' value="@item.CheckBox.Value" />
+                    <input type='checkbox' class='checkbox-inline' data-codigo="@item.Codigo" name='CheckBox' value="@item.CheckBox.Checked"  checked="@check" />
+                </label>
+            </div>
+        </td>
+    </tr>
+}
+
+</table>
+
+<div id="dvValorTotal"></div>
+
+@using (Html.BeginForm("FecharPedido", "Pedido", FormMethod.Post, new { id = "frmFecharPedido", @class = "form-horizontal", role = "form" }))
+{
+    <div>
+        <button id="btnFecharPedido" type="submit"class="btn btn-success btn-lg">Fechar Pedido</button>
+    </div>
+}

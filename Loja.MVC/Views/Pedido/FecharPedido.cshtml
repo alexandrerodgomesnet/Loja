@@ -1,0 +1,168 @@
+﻿@model Loja.MVC.Models.FecharPedidoViewModel
+
+@{
+    ViewBag.Title = "FecharPedido";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Dados do pedido</h3>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <table class="table">
+        <tr>
+            <th>
+                Nome
+            </th>
+            <th>
+                Descricao
+            </th>
+            <th>
+                Preço
+            </th>
+        </tr>        
+
+        @foreach (var item in Model.Pedido.ListaItens)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Produto.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Produto.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Produto.Preco)
+                </td>
+            </tr>
+            
+        }
+        <tr>
+            <td colspan="2" style="text-align:right;">
+                Valor Total
+            </td>
+            <td>
+                <b> @Html.DisplayFor(modelItem => Model.Pedido.ValorTotal)</b>
+            </td>
+        </tr>
+
+    </table>
+
+
+    <h3>Dados do Cliente</h3>
+
+
+    <table class="table">
+        <tr>
+            <th>
+                Nome
+            </th>
+            <th>
+                Cpf
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Celular
+            </th>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Pedido.Cliente.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Pedido.Cliente.Cpf)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Pedido.Cliente.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Pedido.Cliente.Celular)
+            </td>
+        </tr>
+    </table>
+
+
+    <h3>Endereços</h3>
+    
+    <table class="table">
+        <tr>
+            <th>
+                Logradouro
+            </th>
+            <th>
+                Numero
+            </th>
+            <th>
+                Complemento
+            </th>
+
+            <th>
+                Cep
+            </th>
+            <th>
+                Bairro
+            </th>
+            <th>
+                Cidade
+            </th>
+            <th>
+                Estado
+            </th>
+
+            <th>
+                Uf
+            </th>
+            <th>
+                Pais
+            </th>          
+            <th></th>  
+        </tr>
+
+        @foreach (var item in Model.Pedido.Cliente.Enderecos.ToList().OrderByDescending(e => e.TipoEndereco == (Loja.Domain.Enums.TipoEndereco.Entrega)))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Logradouro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Numero)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Complemento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cep)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Bairro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cidade)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Uf)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pais)
+                </td>
+                <td>
+                    Endereço @Html.DisplayFor(modelItem => item.TipoEndereco)
+                </td>
+            </tr>
+
+        }
+    </table>
+}
+
+<div>
+    @Html.ActionLink("Pagina Inícial", "Index", "Home")
+</div>
